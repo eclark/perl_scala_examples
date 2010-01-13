@@ -1,5 +1,6 @@
-<project name="perl_scala_examples" default="dist" basedir=".">
- <property name="scala.home" value="/home/eclark/scala-2.7.7.final"/>
+<project name="perl_scala_examples" default="compile" basedir=".">
+ <property environment="env"/>
+ <property name="scala.home" value="${env.SCALA_HOME}"/>
  <path id="scala.classpath">
   <pathelement location="${scala.home}/lib/scala-compiler.jar"/>
   <pathelement location="${scala.home}/lib/scala-library.jar"/>
