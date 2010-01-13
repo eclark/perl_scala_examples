@@ -38,7 +38,7 @@ class Pong(sema: Semaphore) extends Actor {
         case Ping =>
           if (pongCount % 1000 == 0)
             Console.println("Pong: ping "+pongCount)
-          Thread.sleep(1);
+//          Thread.sleep(1);
           sender ! Pong
           pongCount = pongCount + 1
         case Stop =>
