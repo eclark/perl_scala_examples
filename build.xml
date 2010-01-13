@@ -1,6 +1,18 @@
 <project name="perl_scala_examples" default="compile" basedir=".">
  <property environment="env"/>
- <property name="scala.home" value="${env.SCALA_HOME}"/>
+ <exec executable="which" outputproperty="scala.compiler">
+  <arg value="scalac"/>
+ </exec>
+ <dirname file="${scala.compiler}" property="scala.bindir"/>
+ <dirname file="${scala.bindir}" property="scala.parsedhome"/>
+ <condition property="scala.home" value="${env.SCALA_HOME}" else="${scala.parsedhome}">
+  <and>
+   <available file="${env.SCALA_HOME}"/>
+   <available file="${env.SCALA_HOME}/lib/scala-compiler.jar"/>
+   <available file="${env.SCALA_HOME}/lib/scala-library.jar"/>
+  </and>
+ </condition>
+ <echo message="scala.home: ${scala.home}"/>
  <path id="scala.classpath">
   <pathelement location="${scala.home}/lib/scala-compiler.jar"/>
   <pathelement location="${scala.home}/lib/scala-library.jar"/>
