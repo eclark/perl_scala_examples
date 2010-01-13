@@ -5,15 +5,13 @@ use warnings;
 use Time::HiRes qw/usleep/;
 use Inline(
     'Java' => 'STUDY',
-    STUDY     => ['Ping','Pong','Semaphore'],
+    STUDY     => ['java.util.concurrent.Semaphore','Ping','Pong'],
     AUTOSTUDY => 1,
     CLASSPATH => $ENV{SCALA_HOME} . '/lib/scala-library.jar:.'
 );
 
-my $sema = Semaphore->new;
-
-$sema->incr;
-$sema->incr;
+my $sema = java::util::concurrent::Semaphore->new(2);
+$sema->acquire(2);
 
 my $pong = Pong->new( $sema );
 my $ping = Ping->new( $sema, 100000, $pong);
@@ -21,6 +19,5 @@ my $ping = Ping->new( $sema, 100000, $pong);
 $ping->start;
 $pong->start;
 
-while ($sema->count > 0) {
-    usleep 1000;
-} 
+## blocks until threads are finished.
+$sema->acquire(2);
