@@ -13,9 +13,15 @@
   </and>
  </condition>
  <echo message="scala.home: ${scala.home}"/>
+ <exec executable="perl" outputproperty="inline.java.jar">
+  <arg value="-MInline::Java=jar"/>
+ </exec>
+ <echo message="inline.java.jar: ${inline.java.jar}"/>
  <path id="scala.classpath">
   <pathelement location="${scala.home}/lib/scala-compiler.jar"/>
   <pathelement location="${scala.home}/lib/scala-library.jar"/>
+  <pathelement location="${inline.java.jar}"/>
+  <pathelement location="."/>
  </path>
  <taskdef resource="scala/tools/ant/antlib.xml">
   <classpath refid="scala.classpath"/>
@@ -24,6 +30,9 @@
   <scalac srcdir="${basedir}" classpathref="scala.classpath">
    <include name="*.scala"/>
   </scalac> 
+ </target>
+ <target name="callperl" depends="compile">
+  <java classpathref="scala.classpath" classname="HelpMePerl"/>
  </target>
  <target name="run" depends="compile">
   <exec executable="perl" dir="${basedir}">
