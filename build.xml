@@ -28,7 +28,7 @@
  </taskdef>
  <target name="compile">
   <scalac srcdir="${basedir}" classpathref="scala.classpath">
-   <include name="*.scala"/>
+   <include name="**/*.scala"/>
   </scalac> 
  </target>
  <target name="callperl" depends="compile">
@@ -42,7 +42,7 @@
  <target name="clean">
   <delete dir="_Inline"/>
   <delete>
-   <fileset dir="${basedir}" includes="*.class"/>
+   <fileset dir="${basedir}" includes="**/*.class"/>
   </delete>
  </target>
 </project>
