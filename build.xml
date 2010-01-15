@@ -21,7 +21,6 @@
   <pathelement location="${scala.home}/lib/scala-compiler.jar"/>
   <pathelement location="${scala.home}/lib/scala-library.jar"/>
   <pathelement location="${inline.java.jar}"/>
-  <pathelement location="."/>
  </path>
  <taskdef resource="scala/tools/ant/antlib.xml">
   <classpath refid="scala.classpath"/>
