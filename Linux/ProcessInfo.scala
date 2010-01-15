@@ -2,8 +2,9 @@
 package Linux
 
 class ProcessInfo(val pid: Int) {
+    def this() = this(-1)
 }
 
 object ProcessInfo {
-    def tree(val pid: Int) = new ProcessInfo(pid) 
+    def tree(pid: Int) = new ProcessInfo(pid) 
 }

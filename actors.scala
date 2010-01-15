@@ -5,9 +5,9 @@ case object Stop
 
 import scala.actors.Actor
 import scala.actors.Actor._
-import java.util.concurrent.Semaphore
 
-class Ping(sema: Semaphore, count: Int, pong: Actor) extends Actor {
+class Ping(cv: CondVar[Boolean], count: Int, pong: Actor) extends Actor {
+  cv.begin
   def act() {
     var pingsLeft = count - 1
     pong ! Ping
@@ -22,7 +22,7 @@ class Ping(sema: Semaphore, count: Int, pong: Actor) extends Actor {
           } else {
             Console.println("Ping: stop")
             pong ! Stop
-            sema.release()
+            cv.end
             exit()
           }
       }
@@ -30,7 +30,8 @@ class Ping(sema: Semaphore, count: Int, pong: Actor) extends Actor {
   }
 }
 
-class Pong(sema: Semaphore) extends Actor {
+class Pong(cv: CondVar[Boolean]) extends Actor {
+  cv.begin
   def act() {
     var pongCount = 0
     loop {
@@ -43,7 +44,7 @@ class Pong(sema: Semaphore) extends Actor {
           pongCount = pongCount + 1
         case Stop =>
           Console.println("Pong: stop")
-          sema.release()
+          cv.end
           exit()
       }
     }

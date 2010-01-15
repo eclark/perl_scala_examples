@@ -2,13 +2,17 @@
 
 use strict;
 use warnings;
-use Time::HiRes qw/usleep/;
 use Inline(
-    'Java' => 'STUDY',
+    'Java'    => 'STUDY',
     STUDY     => ['Linux.ProcessInfo'],
     AUTOSTUDY => 1,
+    PACKAGE   => 'j',
     CLASSPATH => $ENV{SCALA_HOME} . '/lib/scala-library.jar:.'
 );
+use Data::Dumper;
 
-print Linux::ProcessInfo->funkytown . "\n";
+my $o = j::Linux::ProcessInfo->new($$);
 
+print Dumper($o);
+
+print $o->pid . "\n";
